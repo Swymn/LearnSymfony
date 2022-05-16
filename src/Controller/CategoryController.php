@@ -11,16 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController {
 
-    protected CategoryRepository $categoryRepository;
-
-    public function __construct(CategoryRepository $categoryRepository) {
-        $this -> categoryRepository = $categoryRepository;
-    }
-
     #[Route('{slug}', name: 'app_category_show')]
-    public function showCategory(ProductRepository $productRepository, $slug): Response {
+    public function showCategory(CategoryRepository $categoryRepository, ProductRepository $productRepository, $slug): Response {
 
-        $category = $this -> categoryRepository -> findOneBy([
+        $category = $categoryRepository -> findOneBy([
             'slug' => $slug,
         ]);
 
@@ -35,9 +29,5 @@ class CategoryController extends AbstractController {
             'products' => $products,
             'category' => $category,
         ]);
-    }
-
-    public function getCategory(): array {
-        return $this -> categoryRepository -> findAll();
     }
 }

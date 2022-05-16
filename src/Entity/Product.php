@@ -17,13 +17,11 @@ class Product {
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Length(max: 255, maxMessage: "Votre nom doit faire maximum {{ limit }} caractères.")]
     #[Assert\NotBlank(message: "Le nom ne peut pas être vide.")]
-    #[Assert\NotNull(message: "Le nom ne peut pas être null.")]
     private string $name;
 
     #[ORM\Column(type: 'float')]
     #[Assert\GreaterThanOrEqual(value: 0, message: "Le prix doit être forcément supérieur à 0.")]
     #[Assert\NotBlank(message: "Le prix ne peut pas être vide.")]
-    #[Assert\NotNull(message: "Le prix ne peut pas être null.")]
     private float $price;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -31,17 +29,14 @@ class Product {
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[Assert\NotBlank(message: "La category ne peut pas être vide.")]
-    #[Assert\NotNull(message: "La category ne peut pas être null.")]
     private Category $category;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: "L'image ne peut pas être vide.")]
-    #[Assert\NotNull(message: "L'image ne peut pas être null.")]
     private string $picture;
 
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank(message: "La description ne peut pas être vide.")]
-    #[Assert\NotNull(message: "La description ne peut pas être null.")]
     private string $shortDescription;
 
     public function getId(): int {
