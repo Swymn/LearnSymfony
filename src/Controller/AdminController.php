@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdminController extends AbstractController {
 
@@ -45,7 +46,7 @@ class AdminController extends AbstractController {
     }
 
     #[Route('/admin/product/{id}/edit', name: "admin_product_edit")]
-    public function editProduct(ProductRepository $productRepository, Request $request, EntityManagerInterface $manager, $id): Response {
+    public function editProduct(ProductRepository $productRepository, Request $request, EntityManagerInterface $manager, ValidatorInterface $validator , $id): Response {
 
         $product = $productRepository -> find($id);
 
