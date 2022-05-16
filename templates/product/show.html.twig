@@ -21,7 +21,7 @@
                 {{ product.category.name}}
             </span>
             <p>
-                ({{ product.convertPrice | format_currency('EUR', locale='fr') }})
+                ({{ (product.price / 100) | format_currency('EUR', locale='fr') }})
             </p>
             <p>{{ product.shortDescription }}</p>
             <a href="#" class="btn btn-outline-success">
