@@ -17,7 +17,7 @@ class Product {
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Length(max: 255, maxMessage: "Votre nom doit faire maximum {{ limit }} caractères.")]
     #[Assert\NotBlank(message: "Le nom ne peut pas être vide.")]
-    private string $name;
+    private string $productName;
 
     #[ORM\Column(type: 'float')]
     #[Assert\GreaterThanOrEqual(value: 0, message: "Le prix doit être forcément supérieur à 0.")]
@@ -44,11 +44,11 @@ class Product {
     }
 
     public function getName(): string {
-        return $this -> name;
+        return $this -> productName;
     }
 
-    public function setName(string $name): self {
-        $this -> name = $name;
+    public function setName(string $productName): self {
+        $this -> productName = $productName;
         return $this;
     }
 

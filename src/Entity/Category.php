@@ -19,7 +19,7 @@ class Category {
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: "Le nom de la catégorie ne peut être vide")]
     #[Assert\Length(min: 3, minMessage: "Le nom de la catégorie doit faire au moins {{ limit }} caractères.")]
-    private string $name;
+    private string $categoryName;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $slug;
@@ -39,11 +39,11 @@ class Category {
     }
 
     public function getName(): string {
-        return $this -> name;
+        return $this -> categoryName;
     }
 
-    public function setName(string $name): self {
-        $this -> name = $name;
+    public function setName(string $categoryName): self {
+        $this -> categoryName = $categoryName;
         return $this;
     }
 

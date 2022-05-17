@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Recherche
+{% endblock %}
+
+{% block body %}
+
+    {% if not products %}
+        <h1 class="mt-4" style="text-align: center">Aucune catégorie ou produit ne correspond à votre recherche!</h1>
+    {% else %}
+    <div class="row">
+        {% for product in products %}
+            <div class="col-4">
+                {% include "shared/_card.html.twig" with {'card': product} %}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+{% endblock %}

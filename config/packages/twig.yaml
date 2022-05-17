@@ -5,6 +5,8 @@ twig:
     globals:
         categories:
             '@App\Utils\CategoryUtils'
+        products:
+            ''
 
 when@test:
     twig:
