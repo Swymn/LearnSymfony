@@ -9,14 +9,15 @@ use App\Form\ProductFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+#[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas le droit d'accéder à cette ressource.")]
 class AdminController extends AbstractController {
 
     #[Route('/admin/product/create', name: 'admin_product_create')]
@@ -46,7 +47,7 @@ class AdminController extends AbstractController {
     }
 
     #[Route('/admin/product/{id}/edit', name: "admin_product_edit")]
-    public function editProduct(ProductRepository $productRepository, Request $request, EntityManagerInterface $manager, ValidatorInterface $validator , $id): Response {
+    public function editProduct(ProductRepository $productRepository, Request $request, EntityManagerInterface $manager, $id): Response {
 
         $product = $productRepository -> find($id);
 
@@ -101,6 +102,9 @@ class AdminController extends AbstractController {
 
         if (!$category)
             throw new NotFoundHttpException("La category demandé est introuvable.");
+
+        $this -> denyAccessUnlessGranted('CAN_EDIT', $category, "Vous n'êtes pas le propriétaire de cette catégorie!");
+
 
         $form = $this -> createForm(CategoryFormType::class, $category);
 
