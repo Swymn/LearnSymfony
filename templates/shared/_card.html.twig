@@ -4,12 +4,16 @@
         <h4 class="card-title">{{ card.name }}</h4>
         <h6 class="card.subtitle">{{ (card.price / 100) | format_currency('EUR', locale='fr')}}</h6>
 
-        <span class="badge bg-success">
+        <a class="badge bg-success" href="{{ path('app_category_show', {'slug': card.category.slug}) }}">
             {{ card.category.name }}
-        </span>
+        </a>
 
         <p class="card-desc">{{ card.shortDescription }}</p>
         <a href="{{ path('product_show', {'category_slug': card.category.slug, 'product_slug': card.slug })}}" class="btn btn-second btn-sm">Détails</a>
-        <a href="#" class="btn btn-outline-success btn-sm">Ajouter</a>
+        {% if product.quantity == 0 %}
+            <a class="btn btn-outline-danger btn-sm">Out of Stock</a>
+        {% else %}
+            <a href="{{ path('app_cart_add', {'id': card.id}) }}" class="btn btn-outline-success btn-sm">Ajouter</a>
+        {% endif %}
     </div>
 </div>

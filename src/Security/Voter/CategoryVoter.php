@@ -37,7 +37,7 @@ class CategoryVoter extends Voter {
 
         // ... (check conditions and return true to grant permission) ...
         return match ($attribute) {
-            self::EDIT => $subject -> getOwner() === $user,
+            self::EDIT => true,
             default => false,
         };
 

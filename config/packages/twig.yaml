@@ -5,8 +5,8 @@ twig:
     globals:
         categories:
             '@App\Utils\CategoryUtils'
-        products:
-            ''
+        cartService:
+            '@App\Cart\CartService'
 
 when@test:
     twig:

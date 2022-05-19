@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -43,6 +44,12 @@ class ProductFormType extends AbstractType {
                 'label' => "Image du Produit",
                 'attr' => [
                     'placeholder' => "Tapez une URL d'image"
+                ]
+            ])
+            -> add('quantity', NumberType::class, [
+                'label' => "Quantité du Produit",
+                'attr' => [
+                    'placeholder' => "Tapez la quantité du Produit"
                 ]
             ])
             -> add('category', EntityType::class, [
