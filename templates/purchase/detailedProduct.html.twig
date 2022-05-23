@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Commande #{{ purchase.id }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>Commande N°{{ purchase.id }}</h1>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="{{ path('app_purchase_show', {'id': purchase.id}) }}">Purchase Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="{{ path('app_purchase_show_product', {'id': purchase.id}) }}">Products</a>
+        </li>
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show my-3">
+            <div class="row">
+                {% for purchaseItem in purchase.purchaseItems %}
+                    <div class="col-4 card" style="max-width: 20rem;">
+                        <div class="card-header">
+                            <span class="badge rounded-pill bg-success">#{{ purchaseItem.product.id }}</span> - {{ purchaseItem.productName }}
+                        </div>
+                        <div class="card-body">
+                            <p><span class="badge rounded-pill bg-info">Quantité : {{ purchaseItem.quantity }}</span></p>
+                            <p>
+                                Description: <br>
+                                {{ purchaseItem.product.shortDescription }}
+                            </p>
+                            <p>
+                                <span class="badge rounded-pill bg-info mb-2">Prix (Unitaire): {{ (purchaseItem.product.price / 100) | format_currency('EUR', locale='fr') }}</span><br>
+                                <span class="badge rounded-pill bg-info mb-2">Prix : {{ (purchaseItem.total / 100) | format_currency('EUR', locale='fr') }}</span>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

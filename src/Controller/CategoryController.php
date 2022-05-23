@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController {
 
-    #[Route('{slug}', name: 'app_category_show')]
+    #[Route('{slug}', name: 'app_category_show', priority: -1)]
     public function showCategory(CategoryRepository $categoryRepository, ProductRepository $productRepository, $slug): Response {
 
         $category = $categoryRepository -> findOneBy([

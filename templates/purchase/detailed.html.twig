@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Commande #{{ purchase.id }}
+{% endblock %}
+
+{% block body %}
+    <h1>Commande N°{{ purchase.id }}</h1>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="{{ path('app_purchase_show', {'id': purchase.id}) }}">Purchase Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="{{ path('app_purchase_show_product', {'id': purchase.id}) }}">Products</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show my-3">
+            <div class="card" style="max-width: 20rem;">
+                <div class="card-header">
+                    Created at : {{ purchase.purchasedAt.format('d/m/Y H:m') }}
+                </div>
+                <div class="card-body">
+                    <p>
+                        Adresse : {{ purchase.address }}<br>
+                        City : {{ purchase.city }}, {{ purchase.postalCode }}
+                    </p>
+                    <p>
+                        <span class="badge rounded-pill bg-info">Price : {{ (purchase.total / 100) | format_currency('EUR', locale='fr') }}</span>
+                        <span class="badge rounded-pill bg-info">Status : {{ purchase.status }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

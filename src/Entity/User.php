@@ -29,6 +29,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column(type: 'string', length: 255)]
     private string $fullName;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Purchase::class)]
+    private Collection $purchases;
+
+    public function __construct() {
+        $this -> purchases = new ArrayCollection();
+    }
+
     public function getId(): int {
         return $this -> id;
     }
@@ -92,6 +99,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
 
     public function setFullName(string $fullName): self {
         $this -> fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Purchase>
+     */
+    public function getPurchases(): Collection {
+        return $this -> purchases;
+    }
+
+    public function addPurchase(Purchase $purchase): self {
+        if (!$this -> purchases -> contains($purchase)) {
+            $this -> purchases[] = $purchase;
+            $purchase->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchase(Purchase $purchase): self {
+        if ($this -> purchases -> removeElement($purchase)) {
+            // set the owning side to null (unless already changed)
+            if ($purchase -> getUser() === $this) {
+                $purchase -> setUser(null);
+            }
+        }
 
         return $this;
     }

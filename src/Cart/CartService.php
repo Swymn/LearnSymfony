@@ -89,7 +89,7 @@ class CartService {
     }
 
     public function clearCart(): void {
-        $this -> setCart($this -> session, []);
+        $this -> setCart([]);
     }
 
     public function flashMessage(string $messageType, string $message): void {
@@ -107,7 +107,7 @@ class CartService {
     public function getTotal() : float {
         $total = 0;
 
-        foreach ($this -> getCart($this -> session) as $id => $quantity) {
+        foreach ($this -> getCart() as $id => $quantity) {
 
             $product = $this -> productRepository -> find($id);
 
@@ -125,12 +125,12 @@ class CartService {
      *
      * This function returns the entire cart with detailed information about the products.
      *
-     * @return array
+     * @return CartItem[]
      */
     public function getDetailedCartItems(): array {
         $products = [];
 
-        foreach ($this -> getCart($this -> session) as $id => $quantity) {
+        foreach ($this -> getCart() as $id => $quantity) {
             $product = $this -> productRepository -> find($id);
 
             if (!$product)
@@ -140,5 +140,19 @@ class CartService {
         }
 
         return $products;
+    }
+
+    /**
+     *
+     * This function returns the number of items in the cart
+     *
+     * @return int
+     */
+    public function cartSize(): int {
+        $size = 0;
+        foreach ($this -> getCart() as $id => $qty)
+            $size += $qty;
+
+        return $size;
     }
 }

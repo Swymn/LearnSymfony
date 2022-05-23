@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,23 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController {
 
-    #[Route('/{slug}', name: 'product_category')]
-    public function category(CategoryRepository $categoryRepository , $slug): Response {
-
-        $category = $categoryRepository -> findOneBy([
-            'slug' => $slug
-        ]);
-
-        if (!$category) {
-            throw new NotFoundHttpException("La catégorie demandée n'existe pas.");
-        }
-
-        return $this->render("category/show.html.twig", [
-            'category' => $category,
-        ]);
-    }
-
-    #[Route('/{category_slug}/{product_slug}', name: "product_show")]
+    #[Route('/{category_slug}/{product_slug}', name: "product_show", priority: -1)]
     public function show(ProductRepository $repository, $product_slug): Response {
 
         $product = $repository -> findOneBy([

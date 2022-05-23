@@ -17,22 +17,26 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_cart') }}">
                         <i class="fas fa-cart-shopping"></i>
-                        Panier ({{ (cartService.getTotal() / 100) | format_currency('EUR', locale= 'fr')}})
+                        <span class="badge rounded-pill bg-info">{{ cartService.cartSize() }}</span>
+                        Pannier ({{ (cartService.getTotal() / 100) | format_currency('EUR', locale= 'fr')}})
                     </a>
                 </li>
             </ul>
             <ul class="navbar-nav mx-4">
                 {% if not app.user %}
-                <li class="nav-item">
-                    <a class="nav-link mx-1" href="#">Inscription</a>
-                </li>
-                <li class="nav-item mx-1">
-                    <a class="nav-link btn btn-second" href="{{ path('app_auth_login') }}">Connexion</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-1" href="#">Inscription</a>
+                    </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link btn btn-second" href="{{ path('app_auth_login') }}">Connexion</a>
+                    </li>
                 {% else %}
-                <li class="nav-item mx-1">
-                    <a class="nav-link btn btn-second" href="{{ path('app_auth_logout') }}">Déconnexion</a>
-                </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link btn btn-second" href="{{ path('app_purchase_list') }}">Mes Commandes</a>
+                    </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link btn btn-second" href="{{ path('app_auth_logout') }}">Déconnexion</a>
+                    </li>
                 {% endif %}
             </ul>
             <form class="d-flex" action="{{ path('app_home_search') }}">

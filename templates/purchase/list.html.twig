@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mes commandes
+{% endblock %}
+
+{% block body %}
+
+    <h1>Mes commandes</h1>
+
+    <table class="table">
+        <thead>
+            <tr class="table-active">
+                <th scope="col">Commande ID</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Date</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+                <tr>
+                    <td><a href="{{ path('app_purchase_show', {'id': purchase.id}) }}">#{{ purchase.id }}</a></td>
+                    <td>{{ purchase.address }}<br>{{ purchase.postalCode }}, {{ purchase.city }}</td>
+                    <td>{{ purchase.purchasedAt.format('d/m/Y H:m')}}</td>
+                    <td>{{ (purchase.total / 100) | format_currency('EUR', locale='fr')}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

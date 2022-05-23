@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Cart\CartService;
 use App\Entity\Product;
+use App\Form\CartConfirmationType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,9 +85,6 @@ class CartController extends AbstractController {
 
     #[Route('/cart/payment', name: "app_cart_payment")]
     public function payment(): Response {
-
-        $this -> utils -> clearCart();
-
-        return $this -> redirectToRoute('app_cart');
+        return $this -> redirectToRoute('app_cart_coordinates');
     }
 }
