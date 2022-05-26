@@ -14,6 +14,8 @@ class Purchase {
     public const STATUS_PENDING = 'PENDING';
     public const STATUS_PAID = 'PAID';
 
+    public const SUCCESS = 'purchase.success';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]

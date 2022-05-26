@@ -4,12 +4,14 @@ namespace App\Controller\Purchase;
 
 use App\Cart\CartService;
 use App\Entity\Purchase;
+use App\Event\PurchaseSuccessEvent;
 use App\Repository\PurchaseRepository;
 use App\Stripe\StripeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Stripe\Exception\ApiErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,17 +54,31 @@ class PurchasePaymentController extends AbstractController {
     }
 
     #[Route('/purchase/validate/{id}', name: "app_purchase_validate", requirements: ['id' => "\d+"])]
-    public function validate(Request $request, $id): Response {
+    public function validate(Request $request, EventDispatcherInterface $dispatcher, $id): Response {
 
         $purchase = $this -> purchaseRepository -> find($id);
 
         if ($request -> query -> has('payment_intent') && $request -> query -> has('redirect_status')) {
-            if ($request -> query -> get('payment_intent') === $purchase -> getStripeIntentID() && $request -> query -> get('redirect_status') === "succeeded") {
-                $this -> cartService -> clearCart();
+            if ($request -> query -> get('payment_intent') === $purchase -> getStripeIntentID())  {
 
-                $this -> addFlash('success', "Merci pour votre achat :) !");
+                if ($request -> query -> get('redirect_status') === "succeeded") {
 
-                return $this -> redirectToRoute('app_home');
+                    // 1. Je vide le panier.
+                    $this -> cartService -> clearCart();
+
+                    // 2. Je lance un évènement qui permet de réagir à la prise d'une commande !
+                    $purchaseEvent = new PurchaseSuccessEvent($purchase);
+                    $dispatcher -> dispatch($purchaseEvent, Purchase::SUCCESS);
+
+                    // 3. J'ajoute un flash pour notifier l'utilisateur que son achat à bien été effectué.
+                    $this -> addFlash('success', "Merci pour votre achat :) !");
+
+                    // 4. Je le redirige à la page d'accueil.
+                    return $this -> redirectToRoute('app_home');
+
+                } else {
+                    $this -> addFlash('danger', "Une erreur c'est produite lors du payement de votre panier :( !");
+                }
             }
         }
 
