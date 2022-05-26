@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Cart\CartService;
 use App\Repository\ProductRepository;
 use App\Utils\ProductUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

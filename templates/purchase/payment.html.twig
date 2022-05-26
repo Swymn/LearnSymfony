@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Payment
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-4">
+            {% for product in purchase.purchaseItems %}
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>#{{ product.id }} - {{ product.productName }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <h4>{{ (product.productPrice / 100) | format_currency('EUR', locale='fr')}}</h4>
+                            <p>{{ product.product.shortDescription }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-8">
+            <form class="form-payment" id="payment-form">
+                <h1>Payment !</h1>
+                <div id="payment-element">
+                    <!--Stripe.js injects the Payment Element-->
+                </div>
+                <button class="btn btn-outline-success" id="submit">
+                    <div class="spinner hidden" id="spinner"></div>
+                    <span id="button-text">Pay {{ (purchase.total / 100) | format_currency('EUR', locale='fr') }}</span>
+                </button>
+                <div id="payment-message" class="hidden"></div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const clientSecret = '{{ client_secret }}';
+        const stripePublicKey = '{{ stripePublicKey }}';
+        const redirectAfterSuccessURL = "{{ url('app_purchase_validate', {'id': id}) }}";
+    </script>
+    <script src="{{ asset('js/payment.js') }}"></script>
+{% endblock %}

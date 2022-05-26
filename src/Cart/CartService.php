@@ -18,12 +18,12 @@ class CartService {
 
     protected EntityManagerInterface $manager;
     protected ProductRepository $productRepository;
-    protected SessionInterface $session;
+    protected RequestStack $requestStack;
 
     public function __construct(EntityManagerInterface $manager, ProductRepository $productRepository, RequestStack $requestStack) {
         $this -> manager = $manager;
         $this -> productRepository = $productRepository;
-        $this -> session = $requestStack -> getSession();
+        $this -> requestStack = $requestStack;
     }
 
 
@@ -81,11 +81,11 @@ class CartService {
     }
 
     public function getCart(): array {
-        return $this -> session -> get(self::CART, []);
+        return $this -> requestStack -> getSession() -> get(self::CART, []);
     }
 
     public function setCart($cart): void {
-        $this -> session -> set(self::CART, $cart);
+        $this -> requestStack -> getSession() -> set(self::CART, $cart);
     }
 
     public function clearCart(): void {
@@ -93,7 +93,7 @@ class CartService {
     }
 
     public function flashMessage(string $messageType, string $message): void {
-        $flashBag = $this -> session -> getBag(self::FLASHES);
+        $flashBag = $this -> requestStack -> getSession() -> getBag(self::FLASHES);
         $flashBag -> add($messageType, $message);
     }
 

@@ -22,4 +22,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
+    App\Stripe\StripeService:
+        arguments:
+            $SECRET_KEY: '%env(STRIPE_SECRET_KEY)%'
+            $PUBLIC_KEY: '%env(STRIPE_PUBLIC_KEY)%'

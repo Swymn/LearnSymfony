@@ -6,6 +6,7 @@ use App\Repository\PurchaseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: PurchaseRepository::class)]
 class Purchase {
@@ -44,6 +45,9 @@ class Purchase {
 
     #[ORM\OneToMany(mappedBy: 'purchase', targetEntity: PurchaseItem::class, orphanRemoval: true)]
     private Collection $purchaseItems;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private string $StripeIntentID;
 
     public function __construct() {
         $this->purchaseItems = new ArrayCollection();
@@ -117,7 +121,7 @@ class Purchase {
         return $this -> user;
     }
 
-    public function setUser(?User $user): self {
+    public function setUser(User|UserInterface $user): self {
         $this -> user = $user;
 
         return $this;
@@ -156,6 +160,16 @@ class Purchase {
                 $purchaseItem -> setPurchase(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStripeIntentID(): string {
+        return $this -> StripeIntentID;
+    }
+
+    public function setStripeIntentID(string $StripeIntentID): self {
+        $this -> StripeIntentID = $StripeIntentID;
 
         return $this;
     }
