@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: PurchaseRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Purchase {
 
     public const STATUS_PENDING = 'PENDING';
@@ -109,6 +110,15 @@ class Purchase {
         return $this;
     }
 
+    #[Orm\PreFlush]
+    public function preFlush(): void {
+        if (empty($this -> getTotal())) {
+            $total = 0;
+            foreach($this -> getPurchaseItems() as $item)
+                $total += $item -> getTotal();
+        }
+    }
+
     public function getStatus(): string {
         return $this -> status;
     }
@@ -137,6 +147,12 @@ class Purchase {
         $this -> purchasedAt = $purchasedAt;
 
         return $this;
+    }
+
+    #[Orm\PrePersist]
+    public function prePersist(): void {
+        if (empty($this -> getPurchasedAt()))
+            $this -> setPurchasedAt(new \DateTime());
     }
 
     /**

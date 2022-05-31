@@ -26,3 +26,21 @@ services:
         arguments:
             $SECRET_KEY: '%env(STRIPE_SECRET_KEY)%'
             $PUBLIC_KEY: '%env(STRIPE_PUBLIC_KEY)%'
+
+    App\DoctrineListener\ProductSlugListener:
+        tags: [
+            {
+                name: 'doctrine.orm.entity_listener',
+                event: prePersist,
+                entity: App\Entity\Product
+            }
+        ]
+
+    App\DoctrineListener\CategorySlugListener:
+        tags: [
+            {
+                name: 'doctrine.orm.entity_listener',
+                event: prePersist,
+                entity: App\Entity\Category
+            }
+        ]

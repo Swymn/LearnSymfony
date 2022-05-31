@@ -22,7 +22,7 @@ class Category {
     private string $categoryName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private string $slug;
+    private string $slug = "";
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
     private Collection $products;

@@ -11,6 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product {
 
+    public const VIEW_EVENT = 'product.view';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -27,7 +29,7 @@ class Product {
     private float $price;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private string $slug;
+    private string $slug = "";
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[Assert\NotBlank(message: "La category ne peut pas être vide.")]
@@ -74,7 +76,7 @@ class Product {
     }
 
     public function getSlug(): string {
-        return $this->slug;
+        return $this -> slug;
     }
 
     public function setSlug(string $slug): self {
