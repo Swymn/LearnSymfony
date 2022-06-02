@@ -20,7 +20,7 @@ class ProductController extends AbstractController {
             'slug' => $product_slug,
         ]);
 
-        if (!$product) {
+        if (empty($product)) {
             throw new NotFoundHttpException("Le produit demandé n'existe pas.");
         }
 
