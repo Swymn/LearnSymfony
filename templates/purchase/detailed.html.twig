@@ -27,7 +27,7 @@
                         City : {{ purchase.city }}, {{ purchase.postalCode }}
                     </p>
                     <p>
-                        <span class="badge rounded-pill bg-info">Price : {{ (purchase.total / 100) | format_currency('EUR', locale='fr') }}</span>
+                        <span class="badge rounded-pill bg-info">Price : {{ purchase.total | amount }}</span>
                         <span class="badge rounded-pill bg-info">Status : {{ purchase.status }}</span>
                     </p>
                 </div>

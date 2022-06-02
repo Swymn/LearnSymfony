@@ -31,8 +31,8 @@
                         {{ item.quantity }}
                         <a href="{{ path('app_cart_add', {'id': item.product.id}) }}"><i class="fas fa-plus"></i></a>
                     </td>
-                    <td>{{ (item.product.price / 100) | format_currency('EUR', locale='fr')}}</td>
-                    <td>{{ (item.total / 100) | format_currency('EUR', locale='fr') }}</td>
+                    <td>{{ item.product.price | amount }}</td>
+                    <td>{{ item.total | amount }}</td>
                     <td><a class="btn btn-outline-danger btn-sm" href="{{ path('app_cart_delete', {'id': item.product.id }) }}"><i class="fas fa-trash"></i></a></td>
                 </tr>
             {% endfor %}

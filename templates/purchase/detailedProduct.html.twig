@@ -32,8 +32,8 @@
                                 {{ purchaseItem.product.shortDescription }}
                             </p>
                             <p>
-                                <span class="badge rounded-pill bg-info mb-2">Prix (Unitaire): {{ (purchaseItem.product.price / 100) | format_currency('EUR', locale='fr') }}</span><br>
-                                <span class="badge rounded-pill bg-info mb-2">Prix : {{ (purchaseItem.total / 100) | format_currency('EUR', locale='fr') }}</span>
+                                <span class="badge rounded-pill bg-info mb-2">Prix (Unitaire): {{ purchaseItem.product.price | amount }}</span><br>
+                                <span class="badge rounded-pill bg-info mb-2">Prix : {{ purchaseItem.total | amount }}</span>
                             </p>
                         </div>
                     </div>

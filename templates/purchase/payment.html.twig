@@ -19,7 +19,7 @@
                             <h2>#{{ product.id }} - {{ product.productName }}</h2>
                         </div>
                         <div class="card-body">
-                            <h4>{{ (product.productPrice / 100) | format_currency('EUR', locale='fr')}}</h4>
+                            <h4>{{ product.productPrice | amount}}</h4>
                             <p>{{ product.product.shortDescription }}</p>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                 </div>
                 <button class="btn btn-outline-success" id="submit">
                     <div class="spinner hidden" id="spinner"></div>
-                    <span id="button-text">Pay {{ (purchase.total / 100) | format_currency('EUR', locale='fr') }}</span>
+                    <span id="button-text">Pay {{ purchase.total | amount }}</span>
                 </button>
                 <div id="payment-message" class="hidden"></div>
             </form>

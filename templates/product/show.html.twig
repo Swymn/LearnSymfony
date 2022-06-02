@@ -22,7 +22,7 @@
                 {{ product.category.name}}
             </span>
             <p>
-                ({{ (product.price / 100) | format_currency('EUR', locale='fr') }})
+                ({{ product.price | amount }})
             </p>
             <p>{{ product.shortDescription }}</p>
             {% if product.quantity == 0 %}

@@ -18,7 +18,7 @@
                     <a class="nav-link" href="{{ path('app_cart') }}">
                         <i class="fas fa-cart-shopping"></i>
                         <span class="badge rounded-pill bg-info">{{ cartService.cartSize() }}</span>
-                        Pannier ({{ (cartService.getTotal() / 100) | format_currency('EUR', locale= 'fr')}})
+                        Pannier ({{ cartService.getTotal() | amount }})
                     </a>
                 </li>
             </ul>

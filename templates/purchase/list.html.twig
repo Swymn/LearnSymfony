@@ -23,7 +23,7 @@
                     <td><a href="{{ path('app_purchase_show', {'id': purchase.id}) }}">#{{ purchase.id }}</a></td>
                     <td>{{ purchase.address }}<br>{{ purchase.postalCode }}, {{ purchase.city }}</td>
                     <td>{{ purchase.purchasedAt.format('d/m/Y H:m')}}</td>
-                    <td>{{ (purchase.total / 100) | format_currency('EUR', locale='fr')}}</td>
+                    <td>{{ purchase.total | amount }}</td>
                 </tr>
             {% endfor %}
         </tbody>
