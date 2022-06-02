@@ -91,13 +91,9 @@
         "database-setup": [
             "php bin/console doctrine:migrations:migrate --no-interaction"
         ],
-        "mail-setup": [
-            "php bin/console messenger:consume async -vv"
-        ],
         "post-install-cmd": [
             "@auto-scripts",
-            "@database-setup",
-            "@mail-setup"
+            "@database-setup"
         ],
         "post-update-cmd": [
             "@auto-scripts"
