@@ -39,7 +39,7 @@
             <tfoot>
                 <tr>
                     <td colspan="5"><strong>Total : </strong></td>
-                    <td>{{ (total / 100) | format_currency('EUR', locale='fr') }}</td>
+                    <td>{{ total | amount }}</td>
                 </tr>
             </tfoot>
         </table>
